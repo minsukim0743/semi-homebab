@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.homebab.admin.blacklist.model.dao.AdminBlacklistMapper">
+	<resultMap type="com.homebab.admin.blacklist.model.dto.MemberRcpBlacklistDTO" id="blacklistSelectResultMap">
+		<id property="memberIdx" column="MEMBER_IDX"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="userPwd" column="USER_PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="nickName" column="NICKNAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birth" column="BIRTH"/>
+		<result property="gender" column="GENDER"/>
+		<result property="authNum" column="AUTH_NUM"/>
+	
+		<association property="blacklistDTO" resultMap="blacklistResultMap"/>
+		<association property="rcpCommentsDTO" resultMap="rcpCommentsResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.homebab.admin.blacklist.model.dto.AdminBlacklistRcpCommentsDTO" id="rcpCommentsResultMap">
+		<id property="memberIdx" column="MEMBER_IDX"/>
+		<result property="cmtIdx" column="CMT_IDX"/>
+		<result property="cmtContent" column="CMT_CONTENT"/>
+		<result property="regDate" column="REG_DATE"/>
+		<result property="rcpIdx" column="RCP_IDX"/>
+	</resultMap>
+	
+	<resultMap type="com.homebab.admin.blacklist.model.dto.AdminBlacklistCmtReportDTO" id="cmtReportResultMap">
+		<id property="memberIdx" column="MEMBER_IDX"/>
+		<result property="cmtIdx" column="CMT_IDX"/>
+		<result property="regDate" column="REG_DATE"/>
+		<result property="stateYn" column="STATE_YN"/>
+	</resultMap>
+	
+	<resultMap type="com.homebab.admin.blacklist.model.dto.AdminBlacklistDTO" id="blacklistResultMap">
+		<id property="memberIdx" column="MEMBER_IDX"/>
+		<result property="regMemIdx" column="REG_MEM_IDX"/>
+		<result property="regDate" column="REG_DATE"/>
+		<result property="modDate" column="MOD_DATE"/>
+	</resultMap>
+	
+	<select id="blacklistSelect" resultMap="blacklistSelectResultMap">
+		
+		SELECT C.RNUM
+		      ,C.MEMBER_IDX 
+		      ,C.USER_ID
+		      ,C.USER_PWD
+		      ,C.NAME
+		      ,C.NICKNAME
+		      ,C.REG_DATE
+	   	  FROM (SELECT ROWNUM RNUM
+				      ,B.MEMBER_IDX 
+				      ,B.USER_ID
+				      ,B.USER_PWD
+				      ,B.NAME
+				      ,B.NICKNAME
+				      ,B.REG_DATE
+			   	 FROM (SELECT
+						       A.MEMBER_IDX 
+						      ,A.USER_ID
+						      ,A.USER_PWD
+						      ,A.NAME
+						      ,A.NICKNAME
+						      ,B.REG_DATE
+			             FROM USERS_MNG A
+		  JOIN BLACKLIST B ON(A.MEMBER_IDX = B.MEMBER_IDX)
+		  <where>
+		  	<if test="searchCondition == 'userId'">
+		  		A.USER_ID LIKE '%' || #{ searchValue } || '%'
+		  	</if> 
+		  	<if test="searchCondition == 'name'">
+		  		A.NAMEL IKE '%' || #{ searchValue } || '%'
+		  	</if>
+		  	<if test="searchCondition == 'nickName'">
+		  		A.NICKNAME LIKE '%' || #{ searchValue } || '%'
+		  	</if>
+		  </where>
+		  ORDER BY B.REG_DATE DESC) B
+		  <![CDATA[
+		  WHERE ROWNUM <= #{ endRow }
+		  ]]>
+		  ) C
+		WHERE C.RNUM >= #{ startRow }
+	</select>
+	
+	<select id="blacklistTotalCount" resultType="_int" parameterType="hashmap">
+		 SELECT
+            	COUNT(*)
+		  FROM (SELECT
+		  			   *
+                  FROM BLACKLIST B
+                  JOIN USERS_MNG A ON(B.MEMBER_IDX = A.MEMBER_IDX)
+                  <where>
+				  	<if test="searchCondition == 'userId'">
+				  		A.USER_ID = #{ searchValue }
+				  	</if>
+					<if test="searchCondition == 'name'">
+						A.NAME = #{ searchValue }
+					</if>
+					<if test="searchCondition == 'nickName'">
+						A.NICKNAME = #{ searchValue }
+					</if>
+				  </where>	
+				  ) 
+	</select>
+	<update id="blacklistUpdate">
+		UPDATE
+			   MEMBER_MNG A
+		   SET A.USE_YN = 'N'
+		 WHERE A.MEMBER_IDX = #{ memberIdx }
+		   AND A.USE_YN = 'Y'
+	</update>
+	<insert id="blacklistUpdate1">
+			INSERT 
+			INTO BLACKLIST B
+			(
+			B.MEMBER_IDX, 
+			B.REG_MEM_IDX, 
+			B.REG_DATE
+			)
+            VALUES
+			(
+            #{ memberIdx },
+            1,
+			SYSDATE
+			)
+	</insert>
+		<update id="blacklistUpdate2">
+		UPDATE
+			   MEMBER_MNG A
+		   SET A.USE_YN = 'Y'
+		 WHERE A.MEMBER_IDX = #{ memberIdx }
+		   AND A.USE_YN = 'N'
+	</update>
+	<delete id="blacklistUpdate3">
+			DELETE FROM BLACKLIST B
+			WHERE  B.MEMBER_IDX = #{ memberIdx }
+	</delete>
+</mapper>

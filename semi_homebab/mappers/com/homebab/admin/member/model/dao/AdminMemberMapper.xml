@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.homebab.admin.member.model.dao.AdminMemberMapper">
+	<resultMap type="com.homebab.admin.member.model.dto.AdminMemberDTO" id="adminMemberResultMap">
+		<id property="memberIdx" column="MEMBER_IDX"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="userPwd" column="USER_PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="nickName" column="NICKNAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birth" column="BIRTH"/>
+		<result property="gender" column="GENDER"/>
+		<result property="authNum" column="AUTH_NUM"/>
+		<association property="ammDTO" resultMap="adminMemberMngResultMap"/>
+	</resultMap>
+	<resultMap type="com.homebab.admin.member.model.dto.AdminMemberMngDTO" id="adminMemberMngResultMap">
+		<id property="memberIdx" column="MEMBER_IDX"/>
+		<result property="memberSort" column="MEMBER_SORT"/>
+		<result property="regDate" column="REG_DATE"/>
+		<result property="modDate" column="MOD_DATE"/>
+		<result property="useYn" column="USE_YN"/>
+	</resultMap>
+	<select id="adminMemberTotalCount" resultType="_int" parameterType="hashmap">
+		SELECT
+			   COUNT(*)
+		  FROM USERS_MNG A
+		<where>
+			<if test="searchCondition == 'userId'">
+				A.USER_ID = #{ searchValue }
+			</if>
+			<if test="searchCondition == 'name'">
+				A.NAME = #{ searchValue }
+			</if>
+			<if test="searchCondition == 'nickName'">
+				A.NICKNAME = #{ searchValue }
+			</if>
+		</where>
+	</select>
+
+	<select id="selectMemberList" resultMap="adminMemberResultMap">
+		SELECT 
+		       A.RNUM
+       	      ,A.MEMBER_IDX
+			  ,A.USER_ID
+			  ,A.USER_PWD
+			  ,A.NAME
+			  ,A.NICKNAME
+			  ,A.EMAIL
+			  ,A.BIRTH
+			  ,A.GENDER  
+		      ,D.REG_DATE
+		      ,D.USE_YN
+		 FROM (SELECT  ROWNUM RNUM
+		      	      ,B.MEMBER_IDX
+					  ,B.USER_ID
+					  ,B.USER_PWD
+					  ,B.NAME
+					  ,B.NICKNAME
+					  ,B.EMAIL
+					  ,B.BIRTH
+					  ,B.GENDER
+			     FROM (SELECT
+				      	      C.MEMBER_IDX
+							 ,C.USER_ID
+						     ,C.USER_PWD
+							 ,C.NAME
+							 ,C.NICKNAME
+							 ,C.EMAIL
+							 ,C.BIRTH
+							 ,C.GENDER
+					    FROM USERS_MNG C
+					 <where>
+					  	     <if test="searchCondition == 'userId'">
+					   			C.USER_ID LIKE '%' || #{ searchValue } || '%'
+						     </if>
+						     <if test="searchCondition == 'name'">
+						   	    C.NAME LIKE '%' || #{ searchValue } || '%'
+						     </if>
+						     <if test="searchCondition == 'nickName'">
+						   	 	C.NICKNAME LIKE '%' || #{ searchValue } || '%'
+						     </if>
+					</where>
+			         ORDER BY C.MEMBER_IDX) B 	         
+		         <![CDATA[
+		         WHERE ROWNUM <= #{ endRow }
+		         ]]>
+	         ) A
+		JOIN MEMBER_MNG D ON(A.MEMBER_IDX = D.MEMBER_IDX)
+	   WHERE A.RNUM >= #{ startRow }
+	</select>
+	
+	<select id="adminMemberDetail" resultMap="adminMemberResultMap">
+		SELECT
+		  	   A.MEMBER_IDX
+			  ,A.USER_ID
+			  ,A.USER_PWD
+			  ,A.NAME
+			  ,A.NICKNAME
+			  ,A.EMAIL
+			  ,A.BIRTH
+			  ,A.GENDER  
+		      ,B.REG_DATE
+		      ,B.USE_YN
+		  FROM USERS_MNG A
+		  JOIN MEMBER_MNG B ON(A.MEMBER_IDX = B.MEMBER_IDX)
+		 WHERE A.MEMBER_IDX = ${ memberIdx } 
+	</select>
+</mapper>

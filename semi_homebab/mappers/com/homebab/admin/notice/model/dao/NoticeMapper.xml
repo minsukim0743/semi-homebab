@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.homebab.admin.notice.model.dao.NoticeMapper">
+    <resultMap type="com.homebab.admin.notice.model.dto.NoticeDTO" id="adminNotice">
+    <id property="ntcIdx" column="NTC_IDX"/>
+    <result property="title" column="TITLE"/>
+    <result property="content" column="CONTENT"/>
+    <result property="regDate" column="REG_DATE"/>
+    <result property="modDate" column="MOD_DATE"/>
+    <result property="memberIdx" column="MEMBER_IDX"/>
+    </resultMap>
+     
+   <select id="selectNoticeList" resultMap="adminNotice">
+		SELECT 	A.NTC_IDX
+		     ,	A.TITLE
+		     ,	A.CONTENT
+		     ,  A.REG_DATE	
+		    FROM NOTICE_R A	
+		    WHERE 1=1
+		    AND A.TITLE LIKE '%' || #{ title } || '%'
+		    AND A.CONTENT LIKE '%' || #{ content } || '%'
+		    ORDER BY A.NTC_IDX DESC
+   </select>
+    
+   <insert id="insertNotice">
+		INSERT INTO NOTICE_R (title, content, reg_date, mod_date, member_idx)
+		SELECT 
+		#{ title },
+		#{content}, 
+		sysdate, 
+		sysdate, 
+		#{ memberIdx }
+		FROM DUAL
+   </insert>
+   
+   <delete id="deleteNotice">
+		DELETE NOTICE_R
+		WHERE NTC_IDX = #{ ntcIdx }
+   </delete>
+   
+</mapper>

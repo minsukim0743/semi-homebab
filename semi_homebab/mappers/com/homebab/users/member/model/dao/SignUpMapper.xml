@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.homebab.users.member.model.dao.SignUpMapper">
+
+	<insert id="signUpUsers">
+		INSERT INTO MEMBER_MNG
+		(
+			MEMBER_IDX,
+			MEMBER_SORT,
+			REG_DATE,
+			MOD_DATE,
+			USE_YN
+		)
+		VALUES
+		(
+			SEQ_MEMBER_MNG.NEXTVAL,
+			1,
+			SYSDATE,
+			NULL,
+			'Y'
+		)
+	</insert>
+
+	<insert id="signUpRegist" parameterType="hashMap">
+		<selectKey keyProperty="member_idx" order="BEFORE" resultType="int">
+	   		SELECT MAX(MEMBER_IDX) AS MEMBER_IDX FROM MEMBER_MNG
+   		</selectKey>
+   		INSERT INTO USERS_MNG
+		(
+			MEMBER_IDX,
+			USER_ID,
+			USER_PWD,
+			NAME,
+			NICKNAME,
+			EMAIL,
+			BIRTH,
+			GENDER,
+			AUTH_NUM
+		)
+		VALUES
+		(
+			#{member_idx},
+			#{suId},
+			#{suPw},
+			#{suName},
+			#{suNickName},
+			#{suEmail},
+			#{suDate},
+			#{suGender},
+			NULL
+		)
+	</insert>
+ 
+</mapper>

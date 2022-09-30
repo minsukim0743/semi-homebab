@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+#loginForm {
+	width: 420px;
+	margin: 100px auto;
+}
+
+#login > div {
+	margin-top: 300px;
+}
+
+#loginForm h1 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+
+}
+
+#loginForm .area {
+  width: 400px;
+  position: relative;
+  margin-top: 20px;
+}
+
+.area input {
+  width: 100%;
+  padding: 20px 10px 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 18px;
+  outline: none;
+}
+
+.area label {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  font-size: 18px;
+  transition: top 0.5s ease;
+  opacity: 0.6;
+}
+
+.area label.warning {
+  color: red !important;
+  animation: warning 0.3s ease;
+  animation-iteration-count: 3;
+}
+
+@keyframes warning {
+  0% {
+    transform: translateX(-8px);
+  }
+  25% {
+    transform: translateX(8px);
+  }
+  50% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+.area input:focus + label,
+.area input:valid + label {
+  top: -5px;
+  font-style: 13px;
+  color: #74B243;
+}
+
+#loginBtn {
+  width: 100%;
+  height: 50px;
+  margin: 0px;
+  color: #fff;
+  background: #74B243;
+  border: none;
+  border-radius: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+#loginBtn:hover {
+  font-weight: 600;
+}
+
+#loginForm .caption {
+  margin-top: 20px;
+  text-align: center;
+
+}
+
+#loginForm .caption a {
+  margin: 0px 20px;
+  font-size: 15px;
+  color: #74B243;
+  text-decoration: none;
+
+}
+
+#loginForm .caption a:hover {
+  font-weight: 600;
+}
+
+

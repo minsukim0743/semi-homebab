@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper	namespace="com.homebab.users.freeboard.model.dao.FreeboardMapper">
+	<resultMap	type="com.homebab.users.freeboard.model.dto.FreeboardDTO" id="FreeboardResultMap">
+		<id property="fbIdx" column="FB_IDX" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="modDate" column="MOD_DATE" />
+		<result property="memberIdx" column="MEMBER_IDX" />
+		<result property="count" column="COUNT" />
+		<result property="name" column="NAME" />
+
+
+		<collection property="fileList" ofType="com.homebab.users.freeboard.model.dto.FreeboardFileUploadDTO">
+			<result property="fileIdx" column="FILE_IDX"/>
+			<result property="orgname" column="ORGNAME"/>
+			<result property="filename" column="FILENAME"/>
+			<result property="path" column="PATH"/>
+<!-- 			<result property="fbIdx" column="FB_IDX"/> -->
+		</collection>
+
+	</resultMap>
+
+	<!-- <resultMap type="com.homebab.users.freeboard.model.dto.FreeboardcommentDTO" 
+		id="FBcommentMap"> -->
+	<!-- <id property="cmtIdx" column="CMT_IDX"/> -->
+	<!-- <result property="regDate" column="REG_DATE"/> -->
+	<!-- <association property="fbIdx" resultMap="FreeboardResultMap"></association> -->
+	<!-- <association property="memberIdx" resultMap="usersMngResultMap"></association> -->
+	<!-- </resultMap> -->
+
+	<resultMap
+		type="com.homebab.users.freeboard.model.dto.FreeboardFileUploadDTO"
+		id="FBFileUploadMap">
+		<id property="fileIdx" column="FILE_IDX" />
+		<result property="orgname" column="ORGNAME" />
+		<result property="filename" column="FILENAME" />
+		<result property="path" column="PATH" />
+		<result property="fbIdx" column="FB_IDX" />
+	</resultMap>
+
+	<resultMap
+		type="com.homebab.users.login.model.dto.UsersMngDTO"
+		id="usersMngResultMap">
+		<id property="memberIdx" column="MEMBER_IDX" />
+		<result property="userId" column="USER_ID" />
+		<result property="userPwd" column="USER_PWD" />
+		<result property="name" column="NAME" />
+		<result property="nickName" column="NICKNAME" />
+		<result property="email" column="EMAIL" />
+		<result property="birth" column="BIRTH" />
+		<result property="gender" column="GENDER" />
+		<result property="authNum" column="AUTH_NUM" />
+	</resultMap>
+
+
+
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+		SELECT
+			 COUNT(*)
+		FROM FREEBOARD A
+		<if test="searchCondition == 'name'">
+			JOIN UsersMngDTO B ON(A.MEMBER_IDX = B.MEMBER_IDX)
+		</if>
+		<where>
+			<if test="searchCondition == 'fbIdx'">
+				A.FB_IDX = #{ searchValue }
+			</if>
+			<if test="searchCondition == 'title'">
+				A.TITLE LIKE '%' || #{ searchValue } || '%'
+			</if>
+			<if test="searchCondition == 'content'">
+				A.CONTENT LIKE '%' || #{ searchValue } || '%'
+			</if>
+			<if test="searchCondition == 'name'">
+				B.NAME LIKE '%' || #{ searchValue } || '%'
+			</if>
+		</where>
+	</select>
+
+				<select id="selectAllFreeboardlist" resultMap="FreeboardResultMap">
+						SELECT 	  A.RNUM
+								, A.FB_IDX
+								, A.TITLE
+								, A.CONTENT
+								, A.REG_DATE
+								, A.MOD_DATE
+								, A.MEMBER_IDX
+								, A.NAME
+							FROM (SELECT  ROWNUM RNUM
+										, B.FB_IDX
+										, B.TITLE
+										, B.CONTENT
+										, B.REG_DATE
+										, B.MOD_DATE
+										, B.MEMBER_IDX
+										, B.NAME
+										FROM (SELECT  C.FB_IDX
+													, C.TITLE
+													, C.CONTENT
+													, C.REG_DATE
+													, C.MOD_DATE
+													, C.MEMBER_IDX
+													, D.NAME
+												 FROM FREEBOARD C
+											     LEFT OUTER JOIN USERS_MNG D ON(C.MEMBER_IDX = D.MEMBER_IDX)
+										<where>
+											<if test="searchCondition == 'fbIdx'">
+												C.FB_IDX = #{ searchValue }
+											</if>
+											<if test="searchCondition == 'title'">
+												C.TITLE LIKE '%' || #{ searchValue } || '%'
+											</if>
+											<if test="searchCondition == 'content'">
+												C.CONTENT LIKE '%' || #{ searchValue } || '%'
+											</if>
+											<if test="searchCondition == 'name'">
+												D.NAME LIKE '%' || #{ searchValue } || '%'
+											</if>
+										</where>
+									ORDER BY C.FB_IDX DESC )B
+							               <![CDATA[
+							                  WHERE ROWNUM <= #{ endRow }
+							                  ]]>
+									) A
+									WHERE A.RNUM >= #{ startRow }
+								</select>
+
+	<insert id="freeboardInsert">
+		INSERT INTO FREEBOARD A
+		(
+		  A.FB_IDX
+		, A.TITLE
+		, A.CONTENT
+		, A.REG_DATE
+		, A.MEMBER_IDX
+		)
+		VALUES
+		(
+		SEQ_FB_IDX.NEXTVAL
+		, #{ title }
+		, #{ content }
+		, #{ regDate }
+		, #{ memberIdx }
+		)
+	</insert>
+
+	<insert id="freeboardFileInsert">
+		INSERT
+		INTO FB_FILEUPLOAD A
+		(
+		  A.FILE_IDX
+		, A.ORGNAME
+		, A.FILENAME
+		, A.PATH
+		, A.FB_IDX
+		)
+		VALUES
+		(
+		SEQ_FILE_IDX.NEXTVAL
+		, #{ orgname }
+		, #{ filename }
+		, #{ path }
+		, #{ fbIdx }
+		)
+		<selectKey keyProperty="fbIdx" resultType="_int" order="BEFORE">
+			SELECT
+			       SEQ_FB_IDX.CURRVAL
+			FROM DUAL
+		</selectKey>
+	</insert>
+
+	<select id="selectFreeboardDetail" 	resultMap="FreeboardResultMap">
+		SELECT
+		A.FB_IDX
+		, A.TITLE
+		, A.CONTENT
+		, A.REG_DATE
+		, B.NICKNAME
+		, B.NAME
+		, A.MOD_DATE
+		, A.MEMBER_IDX
+		, A.COUNT
+		, C.FILE_IDX
+		, C.ORGNAME
+		, C.FILENAME
+		, C.PATH
+		FROM FREEBOARD A
+		LEFT OUTER JOIN USERS_MNG B ON (A.MEMBER_IDX = B.MEMBER_IDX)
+		LEFT OUTER JOIN FB_FILEUPLOAD C ON (A.FB_IDX = C.FB_IDX)
+		WHERE A.FB_IDX = #{ fbIdx }
+	</select>
+
+
+<!-- 	<update id="incrementFreeboardCount"> -->
+<!-- 		UPDATE -->
+<!-- 		FREEBOARD A -->
+<!-- 		SET A.COUNT = (SELECT B.COUNT -->
+<!-- 		FROM FREEBOARD B -->
+<!-- 		WHERE B.FB_IDX = #{ no } -->
+<!-- 		) + 1 -->
+<!-- 		WHERE A.FB_IDX = #{ no } -->
+<!-- 	</update> -->
+
+
+
+	<update id="freeboardUpdate" parameterType="com.homebab.users.freeboard.model.dto.FreeboardDTO">
+		UPDATE
+				FREEBOARD
+		   SET  
+		   		TITLE = #{ title } 
+		   		, CONTENT = #{ content } 
+		   		, MOD_DATE = SYSDATE
+		 WHERE  FB_IDX = #{ fbIdx }
+	</update>
+	
+	
+	
+	<update id="freeboardFileUpdate" parameterType="com.homebab.users.freeboard.model.dto.FreeboardFileUploadDTO">
+		UPDATE
+				FB_FILEUPLOAD 
+		   SET  
+				  ORGNAME = #{ orgname }
+				, FILENAME = #{ filename }
+				, PATH = #{ path }
+				, FB_IDX = #{ fbIdx }
+		 WHERE  FB_IDX = #{ fbIdx }
+		
+		
+	</update>
+	
+	  	<delete id="freeboardDeleteFile" >
+
+  		 DELETE
+  	 	 FROM FB_FILEUPLOAD
+  		 WHERE FILE_IDX = #{ fileIdx }
+  		 
+  	  </delete>
+  	  
+  	  <delete id="freeboardDelete">
+
+  		 DELETE
+  	 	 FROM FREEBOARD
+  		 WHERE FB_IDX = #{ fbIdx }
+
+  	  </delete>
+
+</mapper>

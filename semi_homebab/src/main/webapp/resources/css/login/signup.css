@@ -1,0 +1,89 @@
+.suWrap {
+	width: 400px;
+	margin: 0 auto;
+}
+
+.suWrap div:first-child {
+	margin-top: 100px;
+}
+
+.suWrap > div h1 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.suArea {
+  width: 400px;
+  position: relative;
+}
+
+.suArea input {
+  width: 100%;
+  padding: 20px 10px 10px;
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 18px;
+  outline: none;
+  margin-top: 20px;
+}
+
+.suArea label {
+  position: absolute;
+  left: 10px;
+  top: 35px;
+  font-size: 18px;
+  transition: top 0.5s ease;
+  opacity: 0.6;
+}
+
+.suArea label.warning {
+  color: red !important;
+  animation: warning 0.3s ease;
+  animation-iteration-count: 3;
+  font-size: 10px;
+}
+
+@keyframes warning {
+  0% {
+    transform: translateX(-8px);
+  }
+  25% {
+    transform: translateX(8px);
+  }
+  50% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+.suArea input:focus + label,
+.suArea input:valid + label {
+  top: 17px;
+  font-style: 13px;
+  transition: all 0.5s;
+  font-size: 14px;
+  color: #74B243;
+}
+
+#suDate {
+	margin-top: 10px;
+}
+
+.signUpBtn {
+  width: 100%;
+  height: 50px;
+  margin: 0px;
+  color: #fff;
+  background: #74B243;
+  border: none;
+  border-radius: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.signUpBtn:hover {
+  font-weight: bold;
+}
