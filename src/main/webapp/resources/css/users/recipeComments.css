@@ -1,0 +1,71 @@
+@charset "UTF-8";
+.comments-table{
+	
+	margin-top: 5px;
+	width: 750px;
+}
+
+.comments-table tr{
+	
+	height: 50px;
+	width: 750px;
+	border-bottom:1px solid rgb(220, 220, 220);
+
+}
+.name-date {
+	
+	line-height: 12px;
+}
+
+.comments-table tr td{
+	vertical-align: middle;
+	height: 100px;
+}	
+
+.comments-table .name{
+	
+	font-size: 16px;
+	font-weight: 500;
+	padding-top: 12px;
+	
+}
+
+.comments-table .date{
+	
+	font-size: 14px;
+	color: rgb(200, 200, 200);
+}
+
+.comments-table .cmtContent {
+	
+	font-size: 15px;
+    padding-right: 10px;
+}
+
+.comments-table .siren {
+	
+	vertical-align: baseline;
+	text-align: center;
+	font-size: 15px;
+	padding-top: 20px;
+	border: 0px;
+	outline: 0px;
+	background: white;
+	
+}
+
+.comments-table .delete {
+	
+	vertical-align: baseline;
+	text-align: center;
+	font-size: 15px;
+	line-height: 8px;
+}
+
+.comments-table .siren-button {
+	
+	border: 0px;
+	outline: 0px;
+	background: white;
+	
+}

@@ -1,0 +1,191 @@
+@charset "UTF-8";
+* { list-style: none;}
+a { text-decoration: none; color: black;}
+
+/* ------ wrap start */
+body {
+    margin: 0 auto; 
+    width: 1440px;
+    height: 800px;
+}
+
+#header { 
+	position: relative;
+    width: auto; 
+    height: 50px; 
+    line-height: 50px;
+    border-bottom: solid 1px black;
+    text-align: right;
+}
+
+#footer { 
+    margin-top: 10px;
+    width: auto; 
+    height: 100px; 
+    border-top: 1px solid black;
+}
+
+/* ------ header start */
+
+.logo {
+    position:relative;
+    left: 10px;
+    margin-top: 5px;
+    float: left;
+}
+
+.logotext{
+    position:relative;
+    left: 20px;
+    float: left;
+   	font-size: 16px;
+}
+
+.btns{
+    background-color: rgb(0, 0, 0);
+    font-size: 14px;
+    color: white;
+    padding : 8px;
+    cursor:pointer;
+    user-select:none;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    -webkit-transition-duration: 0.4s;
+}
+
+.logout{
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.website {
+    margin-left: 10px;
+}
+
+.button:hover {
+    margin-top: 5px;
+    transition-duration: 0.1s;
+}
+
+.button:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.5s;
+    box-shadow: 0 0 10px 20px rgb(113, 113, 113);
+}
+
+.button:active:after {
+    box-shadow: 0 0 0 0 rgb(114, 114, 114);
+    left: 0;
+    top:0;
+    opacity: 1;
+    transition: 0s;
+}
+
+.button:active {
+    top: 1px;
+}
+
+/* ------ header end */
+
+/* ------ sidebar start */
+
+.sidebar {
+	position: absolute;
+
+    width: 230px;
+    height: 600px;
+    border-right: solid 1px rgb(223, 222, 222);
+}
+
+.sidebarhead {
+	text-align: center;
+    margin: 20px 0px 0px 15px;
+    width: 195px;
+    height: 40px;
+    font-size: 25px;
+    border-bottom: 1px solid rgb(224, 223, 223);
+    text-indent: 10px;
+}
+
+*{
+    box-sizing: border-box; 
+}
+ /* Accordion */
+#Accordion_wrap {
+   margin-left: 18px;
+}
+
+.mainmenu{
+    position: relative;
+    top: 5pxpx;
+    padding: 17px 0;
+    cursor: pointer;    
+    font-size: 14px;
+    border-bottom: 1px solid #dddddd;
+    padding-left: 20px;
+    width: 195px;
+}
+
+.mainmenu::before{
+    display: inline-block;
+    font-size: 14px;
+    color: #006633;
+    margin: 0 5px;
+}
+
+.mainmenu.on>span{
+    font-weight: bold;
+    color: #006633; 
+}
+
+.submenu {
+    position: relative;
+    display: none;
+    overflow: hidden;
+    font-size: 14px;
+    background-color: #f4f4f2;
+    padding-left: 25px;
+    height: 45px;
+    line-height: 40px;
+    width: 195px;
+}
+.two {
+    height: 80px;      
+}
+
+.submenu::before {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    margin: 0 5px;
+}
+ /* Accordion */
+
+/* ------ sidebar end */
+
+/* login start */
+#loginForm { 
+	position: absolute;
+	top: 0;
+	right: 10px;}
+.texts{
+	position: absolute;
+    right: 55px;
+    width: 100px;
+    height: 21px;
+    margin: 15px 0 0 0;
+    }	
+    
+input.texts.id {
+    right: 160px;
+}

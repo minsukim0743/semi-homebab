@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.login {
+    width: 300px;
+    margin: 150px auto;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 1em;
+}
+.loginarea {
+    width: 250px;
+    margin: 0 auto;
+}
+
+.text {
+    width: 150px;
+    height: 20px;
+}    
+
+.id {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.homebab.users.mypage.model.dao.MyInfoPageMapper">
+
+<resultMap type="com.homebab.users.mypage.model.dto.MyInfoDTO" id="WithdrawalResultMap">
+	<id property="memberIdx" column="MEMBER_IDX"/>
+	<result property="userId" column="USER_ID"/>
+	<result property="name" column="NAME"/>
+	<result property="email" column="EMAIL"/>
+	<result property="userPwd" column="USER_PWD"/>
+	<result property="gender" column="GENDER"/>
+	<result property="birth" column="BIRTH"/>
+</resultMap>
+
+<select id="selectMember" resultMap="WithdrawalResultMap">
+	SELECT
+		   A.NAME
+		 , A.EMAIL
+		 , A.USER_PWD
+		 , A.GENDER
+		 , A.BIRTH
+	  FROM USERS_MNG A
+	 WHERE A.MEMBER_IDX = #{ loginUserIdx } 	   
+
+
+</select>
+
+<select id="checkNickName" resultType="_int">
+   SELECT
+          COUNT(*)
+	 FROM USERS_MNG
+	WHERE NICKNAME = #{ nickName }
+</select>
+
+<update id="updateUsersWithdrawal" parameterType="string"> 
+   UPDATE MEMBER_MNG 
+      SET USE_YN = 'N'
+    WHERE MEMBER_IDX = (SELECT MEMBER_IDX
+                          FROM USERS_MNG
+                         WHERE USER_ID = #{ sessionId })
+</update>
+
+<update id="updateMyInfoSave">
+   UPDATE
+          USERS_MNG
+      SET USER_PWD = #{ userPwd }
+	    , NAME = #{ name }
+        , NICKNAME = #{ nickName }
+        , EMAIL = #{ email }
+        , BIRTH = #{ birth }
+        , GENDER	 = #{ gender }
+    WHERE MEMBER_IDX = #{ memberIdx }    
+</update>
+
+
+</mapper>

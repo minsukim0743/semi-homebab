@@ -1,0 +1,73 @@
+@charset "UTF-8";
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 80px;
+    box-sizing: border-box;
+    letter-spacing: -1px;
+}
+.container .title-box {
+    text-align: center;
+    font-size: 40px;
+    padding: 120px 0 80px;
+}
+.container .recipe-wrap table {
+    width: 100%;
+}
+.container .recipe-wrap th {
+    padding: 25px 0;
+}
+.container .recipe-wrap td {
+    padding: 15px 0;
+}
+.container .recipe-wrap th {
+    text-align: left;
+    font-weight: 400;
+    vertical-align: top;
+}
+.container .recipe-wrap input,
+.container .recipe-wrap textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+}
+
+.container .recipe-wrap textarea {
+    min-height: 200px;
+}
+.container .recipe-wrap input[type="file"] {
+    padding-left: 0;
+    border: none;
+}
+.container .recipe-wrap .list-wrap .lists li {
+    padding-bottom: 10px;
+}
+.container .recipe-wrap .list-wrap .lists li > input {
+    width: 40%;
+}
+.container .recipe-wrap .list-wrap .lists li button {
+    width: 9%;
+    height: 45px;
+    border: 1px solid #ccc;
+}
+.container .recipe-wrap select,
+.container .recipe-wrap input[type="number"] {
+    width: 150px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.container .recipe-wrap select option {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.container .cta-outer {
+    text-align: center;
+    padding: 60px 0 160px; 
+}
+
+.container .cta-outer > button {
+    padding: 12px 50px;
+    border: 1px solid #ccc;
+}

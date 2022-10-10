@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.homebab.users.login.model.dao.LoginMapper">
+
+	<resultMap type="com.homebab.users.login.model.dto.AdminMngDTO" id="adminResultMap">
+		<id property="memberIdx" column="MEMBER_IDX"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="userPwd" column="USER_PWD"/>
+		<result property="name" column="NAME"/>
+	</resultMap>
+	
+	<resultMap type="com.homebab.users.login.model.dto.UsersMngDTO" id="userResultMap">
+		<id property="memberIdx" column="MEMBER_IDX"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="userPwd" column="USER_PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="nickName" column="NICKNAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birth" column="BIRTH"/>
+		<result property="gender" column="GENDER"/>
+		<result property="authNum" column="AUTH_NUM"/>
+	</resultMap>
+	
+	<select id="loginAdminSelect" parameterType="hashmap" resultType="int">
+		SELECT COUNT(*)
+		FROM ADMIN_MNG
+		WHERE 1=1
+		AND USER_ID = #{memberId}
+	</select>
+ 
+ 	<select id="selectEncryptedPwd" parameterType="hashmap" resultType="string">
+ 		SELECT 
+			USER_PWD
+          FROM ADMIN_MNG
+         WHERE 1=1
+           AND USER_ID = #{memberId}
+ 	</select>
+ 	
+ 	<select id="userSelectEncryptedPwd" parameterType="hashmap" resultType="string">
+ 		SELECT 
+			USER_PWD
+          FROM USERS_MNG 
+         WHERE 1=1
+           AND USER_ID = #{memberId}
+ 	</select>
+ 	
+ 	<select id="loginUserSelect" parameterType="hashmap" resultMap="userResultMap">
+ 		SELECT 
+ 			A.MEMBER_IDX, 
+ 			A.USER_ID, 
+ 			A.NAME, 
+ 			A.NICKNAME, 
+ 			A.EMAIL, 
+ 			A.BIRTH, 
+ 			A.GENDER, 
+ 			A.AUTH_NUM
+		FROM USERS_MNG A
+		INNER JOIN MEMBER_MNG B ON (A.MEMBER_IDX = B.MEMBER_IDX)
+		WHERE 1=1
+			AND A.USER_ID = #{memberId}
+			AND B.USE_YN = 'Y'
+ 	</select>
+ 
+ 	<select id="signUpIdCheck" parameterType="string" resultType="int">
+ 		SELECT
+			COUNT(*) AS CNT
+		FROM
+			USERS_MNG
+		WHERE 1=1
+			AND USER_ID = #{suId}
+ 	</select>
+ 	
+ 	<select id="signUpNickNameCheck" parameterType="string" resultType="int">
+ 		SELECT
+			COUNT(*) AS CNT
+		FROM
+			USERS_MNG
+		WHERE 1=1
+			AND NICKNAME = #{suNickName}
+ 	</select>
+ 	
+ 	<select id="findId" parameterType="hashmap" resultMap="userResultMap">
+ 	SELECT
+		A.MEMBER_IDX,
+		A.USER_ID,
+		A.NAME,
+		A.NICKNAME,
+		A.EMAIL,
+		A.BIRTH,
+		A.GENDER,
+		A.AUTH_NUM
+	FROM
+		USERS_MNG A
+	LEFT JOIN MEMBER_MNG B ON (A.MEMBER_IDX = B.MEMBER_IDX)
+	WHERE 1=1
+		AND A.NAME = #{findId}
+		AND A.BIRTH = #{findDate}
+		AND B.USE_YN = 'Y'
+ 	</select>
+ 	
+ 	<select id="selectOneEamil" parameterType="string" resultType="string">
+ 		SELECT
+ 			EMAIL
+ 	 	FROM USERS_MNG 
+ 	 	WHERE USER_ID = #{pdId}
+ 	</select>
+ 	
+ 	<update id="modRandomAuth" parameterType="hashmap">
+ 		UPDATE
+			USERS_MNG
+		SET
+			AUTH_NUM = #{authNum}
+		WHERE
+			USER_ID = #{pfId}
+ 	</update>
+ 	
+ 	<select id="authNumCheck" parameterType="hashmap" resultType="int">
+ 		SELECT 
+ 			COUNT(*)
+ 		FROM USERS_MNG
+ 		WHERE 1=1
+ 			AND USER_ID = #{pfId}
+ 			AND AUTH_NUM = #{pfAuthNum}
+ 	</select>
+ 	
+ 	<update id="passwordModify" parameterType="hashmap">
+ 		UPDATE USERS_MNG
+			SET USER_PWD= #{value}
+		WHERE USER_ID = #{pfId}
+ 	</update>
+ 	
+</mapper>

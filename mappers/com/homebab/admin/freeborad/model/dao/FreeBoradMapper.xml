@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.homebab.admin.freeborad.model.dao.FreeBoradMapper">
+
+	<resultMap type="com.homebab.admin.freeborad.model.dto.FreeBoradDTO" id="freeBoardResultMap">
+		<id property="pbIdx" column="FB_IDX"/>
+		<result property="title" column="TITLE"/>
+		<result property="content" column="CONTENT"/>
+		<result property="regDate" column="REG_DATE"/>
+		<association property="umDTO" resultMap="ResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.homebab.users.member.model.dto.UsersMngDTO" id="ResultMap">
+		<id property="memberIdx" column="MEMBER_IDX"/>
+		<result property="name" column="NAME"/>
+	</resultMap>
+
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+        SELECT
+               COUNT(*)
+          FROM FREEBOARD A
+	</select>
+
+	
+	<select id="selectBoardList" resultMap="freeBoardResultMap">
+         SELECT 
+                 A.RNUM
+			,    A.FB_IDX
+			,    A.TITLE
+			,    A.CONTENT
+			,    A.REG_DATE
+            ,    A.MEMBER_IDX
+			,    A.NAME
+          FROM (SELECT ROWNUM RNUM
+              			,	 B.FB_IDX
+						,    B.TITLE
+						,    B.CONTENT
+						,    B.REG_DATE
+                        ,    B.MEMBER_IDX
+						,    B.NAME
+ 				   FROM (SELECT  C.FB_IDX
+							,    C.TITLE
+							,    C.CONTENT
+							,    C.REG_DATE
+                            ,    C.MEMBER_IDX
+							,    D.NAME
+                        	  FROM FREEBOARD C
+                         JOIN USERS_MNG D ON(C.MEMBER_IDX = D.MEMBER_IDX)
+                        ORDER BY C.FB_IDX DESC
+                          )B
+                  
+                  <![CDATA[
+                  WHERE ROWNUM <= #{ endRow }
+                  ]]>
+               ) A
+
+         WHERE A.RNUM >= #{ startRow }     
+         
+	</select>
+		
+	<delete id="deletborad" > 
+		DELETE FROM FREEBOARD WHERE FB_IDX = #{ pbIdx }
+		
+	
+	
+	
+	</delete>	
+	
+	
+	
+	
+	
+</mapper>
+	

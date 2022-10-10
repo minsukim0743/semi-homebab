@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+.alluserlistheader {
+    height: 50px;
+    width: 1100px;
+    border-bottom: 1px solid  rgb(224, 223, 223);
+}
+.alluserlistheader a {
+    font-size: 25px;
+    line-height: 50px;
+    position: absolute;
+    left: 5px;
+}
+
+.searchCondition {
+	
+   position: absolute;
+   right : 260px;
+   height: 30px;
+   width: 60px;
+   margin: 5px 0 0 0 ;
+	
+}
+
+.text{
+   position: absolute;
+   right : 50px;
+   width: 200px;
+   height: 30px; 
+   margin: 5px 0 0 0;
+}
+.find{
+    width: 40px;
+    height: 30px;
+    position: absolute;
+    right: 0px;
+    margin: 5px 0 0 0;
+}
+
+.usertable {
+    width: 1100px;
+    margin-top: 10px;
+    border-collapse: collapse;   
+}
+
+.detail {
+	margin-bottom: 20px;
+}
+
+th, td{
+    border-bottom: 1px solid #444444;
+    padding: 0px;
+}
+
+td {
+    font-size: 13px;
+    text-align: center;
+}
+
+.alluserlistfooter {
+    width: 1100px;
+    text-align: center	;
+    margin-top: 12px;
+    font-size: 18px;
+}

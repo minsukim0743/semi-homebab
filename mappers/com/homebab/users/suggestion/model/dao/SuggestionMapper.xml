@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.homebab.users.suggestion.model.dao.SuggestionMapper">
+	<resultMap 	type="com.homebab.users.suggestion.model.dto.SuggestionDTO" id="SuggestionResultMap">
+		<id property="sgtIdx" column="SGT_IDX" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="memberIdx" column="MEMBER_IDX" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="modDate" column="MOD_DATE" />
+		<result property="name" column="NAME" />
+		<result property="nickName" column="NICKNAME" />
+
+		<!-- <collection property="name" ofType="com.homebab.users.login.model.dto.UsersMngDTO"> -->
+		<!-- <result property="fbIdx" column="FB_IDX"/> -->
+		<!-- </collection> -->
+	</resultMap>
+
+
+	<resultMap
+		type="com.homebab.users.login.model.dto.UsersMngDTO"
+		id="usermngResultMap">
+		<id property="memberIdx" column="MEMBER_IDX" />
+		<result property="userId" column="USER_ID" />
+		<result property="userPwd" column="USER_PWD" />
+		<result property="name" column="NAME" />
+		<result property="nickName" column="NICKNAME" />
+		<result property="email" column="EMAIL" />
+		<result property="birth" column="BIRTH" />
+		<result property="gender" column="USE_YN" />
+		<result property="authNum" column="GENDER" />
+	</resultMap>
+
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+	SELECT
+			COUNT(*)
+		FROM SUGGESTION A
+		<if test="searchCondition == 'name'">
+			JOIN UsersMngDTO B ON(A.MEMBER_IDX = B.MEMBER_IDX)
+		</if>
+		<where>
+			<if test="searchCondition == 'sgtIdx'">
+				A.SGT_IDX = #{ searchValue }
+			</if>
+			<if test="searchCondition == 'title'">
+				A.TITLE LIKE '%' || #{ searchValue } || '%'
+			</if>
+			<if test="searchCondition == 'content'">
+				A.CONTENT LIKE '%' || #{ searchValue } || '%'
+			</if>
+			<if test="searchCondition == 'name'">
+				B.NAME LIKE '%' || #{ searchValue } || '%'
+			</if>
+		</where>
+
+
+	</select>
+
+
+	<select id="selectAllSuggestionList"
+		resultMap="SuggestionResultMap">
+		SELECT
+				A.RNUM
+				, A.SGT_IDX
+				, A.TITLE
+				, A.CONTENT
+				, A.ANSWER_YN
+				, A.REG_DATE
+				, A.MOD_DATE
+				, A.NAME
+						FROM (SELECT ROWNUM RNUM
+						, B.SGT_IDX
+						, B.TITLE
+						, B.CONTENT
+						, B.ANSWER_YN
+						, B.REG_DATE
+						, B.MOD_DATE
+						, B.NAME
+							FROM (SELECT C.SGT_IDX
+									, C.TITLE
+									, C.CONTENT
+									, C.ANSWER_YN
+									, C.REG_DATE
+									, C.MOD_DATE
+									, D.NAME
+									FROM SUGGESTION C
+									LEFT OUTER JOIN USERS_MNG D ON(C.MEMBER_IDX = D.MEMBER_IDX)
+										<where>
+										<if test="searchCondition == 'sgtIdx'">
+											C.SGT_IDX = #{ searchValue }
+										</if>
+										<if test="searchCondition == 'title'">
+											C.TITLE LIKE '%' || #{ searchValue } || '%'
+										</if>
+										<if test="searchCondition == 'content'">
+											C.CONTENT LIKE '%' || #{ searchValue } || '%'
+										</if>
+										<if test="searchCondition == 'name'">
+											D.NAME LIKE '%' || #{ searchValue } || '%'
+										</if>
+									</where>
+									ORDER BY C.SGT_IDX DESC ) B
+							                  <![CDATA[
+							                  WHERE ROWNUM <= #{ endRow }
+							                  ]]>
+									) A
+									WHERE A.RNUM >= #{ startRow }
+								</select>
+
+	<insert id="insertSuggestion">
+		INSERT INTO SUGGESTION A
+		( A.SGT_IDX
+		, A.TITLE
+		, A.REG_DATE
+		, A.CONTENT
+		, A.MEMBER_IDX
+		)
+		VALUES
+		(
+		SEQ_SUGGESTION.nextval
+		, #{ title }
+		, #{ regDate }
+		, #{ content }
+		, #{ memberIdx }
+		)
+	</insert>
+
+	<select id="selectSuggestionDetail"
+		resultMap="SuggestionResultMap">
+		SELECT
+		A.SGT_IDX
+		, A.TITLE
+		, A.CONTENT
+		, A.REG_DATE
+		, A.MOD_DATE
+		, A.MEMBER_IDX
+		, A.ANSWER_YN
+		, B.NAME
+		FROM SUGGESTION A
+		JOIN USERS_MNG B ON (A.MEMBER_IDX = B.MEMBER_IDX)
+		WHERE A.SGT_IDX = #{ sgtIdx }
+	</select>
+
+
+	<update id="suggestionUpdate">
+		UPDATE
+		SUGGESTION
+		SET
+		TITLE = #{ title }
+		, CONTENT = #{ content }
+		, MOD_DATE = SYSDATE
+		WHERE SGT_IDX = #{ sgtIdx }
+	</update>
+
+
+	<delete id="suggestionDelete">
+		DELETE
+		FROM SUGGESTION A
+		WHERE A.SGT_IDX = #{ sgtIdx }
+	</delete>
+
+	
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,197 @@
+@charset "UTF-8";
+/* 
+    *{margin: 0;padding: 0;}
+
+    body{font-size: 16px;}
+    li{list-style: none;}
+    a{text-decoration: none;color:#000}
+    img{border: 0;vertical-align: top;} */
+
+    #wrap {width: 1600px; background-color: white;margin: 0 auto;}
+    #header {height: 150px; background-color: rgb(255, 255, 255);border-bottom: 1px solid black;}
+       
+       /* header */
+       #header {position: relative;}
+       #header .hdmenu{position: absolute;left: 170px;top: 60px;}
+       #header .hdmenu li{float: left;padding-left: 60px;}
+ 
+       #header .logo a{position: absolute;left: 47%;top: 20px;}
+       #header .search a{position: absolute;right: 480px;top: 65px;}
+       #header .write a{position: absolute;right: 390px; top: 61px;}
+       #header .user a{position: absolute;right: 300px;top: 62px;}
+      
+      /* s: footer */
+      .footer {
+        background-color: #ffffff;
+        color: black;
+        text-align: center; 
+        padding: 30px; 
+        box-sizing: border-box;
+        font-size: 12px;
+    }
+    .footer .footerTop {
+        padding-bottom: 20px;
+        background-color: #e0e0e0;
+        font-size : 14px;
+      
+    }
+    .footer .footerTop > li {
+        display: inline-block;
+        border-left:1px solid rgba(255,255,255,0.1);
+        padding: 0 10px
+    }
+    .footer .footerTop > li.active {
+        border-left: none;
+        
+    }
+    
+    .footer .footerBtm {
+        opacity: 0.6;
+        padding: 10px 0 20px;
+    }
+    .footer .footerBtm p {
+        padding-bottom: 20px;
+    }
+    .footer .footerBtm p span {
+        padding: 0 10px;
+    }
+    /* e: footer */
+
+    @import url(../login/css/reset.css);
+@import url(../homebab_hm/css/style.css);
+
+
+
+
+#main {
+    width: 1600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.revise{
+    position: absolute;
+    top: 20%;
+    left: -400px;
+    width: 160px;
+    height: 50px;
+    background: #74B243;
+
+}
+
+.my {
+    position: absolute;
+    top: 100px;
+    left: -400px;
+    width: 160px;
+    height: 50px;
+    background: #74B243;
+}
+
+
+
+
+
+.area {
+
+  width: 400px;
+  position: relative;
+  margin-top: 20px;
+
+}
+
+
+
+.area input {
+  width: 100%;
+  padding: 20px 10px 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 18px;
+  outline: none;
+
+}
+
+.area label {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  font-size: 18px;
+  transition: top 0.5s ease;
+  opacity: 0.6;
+}
+
+.area label.warning {
+  color: red !important;
+  animation: warning 0.3s ease;
+  animation-iteration-count: 3;
+  font-size: 10px;
+}
+
+@keyframes warning {
+  0% {
+    transform: translateX(-8px);
+  }
+  25% {
+    transform: translateX(8px);
+  }
+  50% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+.area input:focus + label,
+.area input:valid + label {
+  top: -5px;
+  font-style: 13px;
+  transition: all 0.5s;
+  font-size: 14px;
+
+  color: #74B243;
+}
+
+.btn-area {
+  margin-top: 30px;
+}
+
+.btn-area button {
+  width: 100%;
+  height: 50px;
+  margin: 0px;
+  color: #fff;
+  background: #74B243;
+  border: none;
+  border-radius: 20px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.btn-area button:hover {
+  font-weight: 600;
+}
+
+.caption {
+  margin-top: 20px;
+  text-align: center;
+
+}
+
+.caption a {
+  margin: 0px 20px;
+  font-size: 15px;
+  color: #74B243;
+  text-decoration: none;
+
+}
+
+.caption a:hover {
+  font-weight: 600;
+}
+
+
+
+

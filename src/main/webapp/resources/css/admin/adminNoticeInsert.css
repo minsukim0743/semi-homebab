@@ -1,0 +1,51 @@
+#board_write {
+	padding-top:80px;
+    width: 900px;
+    margin: 0 auto;
+}
+  
+h3 {
+    margin: 0px;
+}
+
+input#utitle {
+    border: 0px;
+    width: 400px;
+    border-left: 0px;
+    font-size: 16px;
+    padding: 10px;
+    display: inline-block;
+    background: transparent;
+}
+
+span.b_header {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    vertical-align: top;
+}
+
+form#ifrom {
+    margin-top: 27px;
+}
+
+div#in_title {
+    width: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 2px 0px #bdbdbd;
+    background: #fbfbfb;
+}
+
+div#in_content {
+    margin-top: 15px;
+}
+
+#ucontent {
+    background: whitesmoke;
+    width: 500px;
+    border: 1px solid #d5d5d5;
+    height: 300px;
+    resize: none;
+    padding: 10px;
+}

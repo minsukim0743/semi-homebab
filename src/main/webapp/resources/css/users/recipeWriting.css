@@ -1,0 +1,182 @@
+@charset "UTF-8";
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 80px;
+    box-sizing: border-box;
+    letter-spacing: -1px;
+    padding-bottom: 160px;
+}
+.recipe-view-wrap .title-box {
+    text-align: center;
+    font-size: 40px;
+    padding: 120px 0 30px;
+}
+.recipe-view-wrap .category-box {
+    text-align: center;
+    padding-bottom: 50px;
+    font-style: italic;
+    color: #999;
+}
+.recipe-view-wrap .category-box > span {
+    font-style: italic;
+}
+.recipe-view-wrap .detail-box {
+    margin: 0 auto;
+    width: 400px;
+    display: flex;
+    padding-bottom: 100px;
+}
+.recipe-view-wrap .detail-box > div {
+    width: 50%;
+    text-align: center;
+    position: relative;
+}
+.recipe-view-wrap .detail-box .serving-box:before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 60px;
+    background: url('../homebab-images/ico-serving.png')no-repeat center;
+    background-size: 100% auto;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+.recipe-view-wrap .detail-box .time-box:before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 60px;
+    background: url('../homebab-images/ico-time.png')no-repeat center;
+    background-size: 85% auto;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+
+.recipe-view-wrap .detail-box .heart-box:before {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 60px;
+    background: url('../homebab-images/heart.png')no-repeat center;
+    background-size: 85% auto;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+.recipe-view-wrap .keyVisual-box {
+    padding-bottom: 80px;
+}        
+.recipe-view-wrap .keyVisual-box > img {
+    width: 100%;
+}
+.recipe-view-wrap .ingredient-box:before {
+    content: '- Indgredient';
+    display: block;
+    width: 100%;
+    height: 30px;         
+    padding-bottom: 10px;   
+    font-style: italic;
+}
+.recipe-view-wrap .ingredient-box li {
+     border-bottom: 1px solid #ccc;
+     padding: 20px 15px;
+     display: flex;
+}
+.recipe-view-wrap .ingredient-box li:first-child {
+    border-top: 1px solid #ccc;
+}
+.recipe-view-wrap .ingredient-box li > span {
+    display: block;
+    width: 50%;
+}
+.recipe-view-wrap .content-box {
+    padding-top: 60px;
+}
+.recipe-view-wrap .content-box:before {
+    content: '- Recipe';
+    display: block;
+    width: 100%;
+    height: 30px;         
+    padding-bottom: 10px; 
+    font-style: italic; 
+}
+.recipe-view-wrap .content-box > div {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 20px 15px;
+}
+
+#form-commentInfo{
+    width: 100%;
+    margin-left: 370px;
+    padding-bottom: 150px;
+}
+
+#comment-count{
+margin-bottom: 10px; 
+}
+
+#comment-input{
+width: 50%;
+height: 3.3em;
+}
+
+#submit{
+background-color: rgb(0, 128,255);
+width: 5.5em;
+height: 3.3em;;
+font-size: 15px;
+font-weight: bold;
+color: aliceblue;
+}
+
+#voteUp, #voteDown{
+width: 3.5em;
+height: 1.9em;
+background-color: aqua;    
+}
+
+#comments{
+margin-top: 10px;
+}
+
+.eachComment{   
+width :50%; 
+margin: 10px;  
+padding: 0.5em; 
+border-bottom: 1px solid #c1bcba;
+}
+
+.eachComment .name{
+font-size: 18px;
+font-weight: bold;
+margin-bottom: 0.3em;
+display: flex;
+justify-content: space-between;
+}
+
+.eachComment .inputValue{
+font-size: 1.2em;
+font-style: italic;    
+}
+
+.eachComment .time{
+font-size: 0.7em;
+color: #c1bcba;
+font-style: oblique;
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+
+}
+
+.eachComment .voteDiv{
+display: flex;
+justify-content: flex-end;
+}
+
+.eachComment .deleteComment{
+background-color: white;
+color: black;
+}

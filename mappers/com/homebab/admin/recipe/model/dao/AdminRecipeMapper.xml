@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.homebab.admin.recipe.model.dao.AdminRecipeMapper">
+	<resultMap type="com.homebab.admin.recipe.model.dto.AdminRecipeListDTO" id="recipeListResultMap">
+		<id property="rcpIdx" column="RCP_IDX"/>	
+		<result property="title" column="TITLE"/>
+		<result property="regDate" column="REG_DATE"/>
+		<result property="aprState" column="APR_STATE"/>
+		<result property="stateYn" column="STATE_YN"/>
+		<association property="amDTO" resultMap="adminMemberResultMap"/>	
+	</resultMap>
+	<resultMap type="com.homebab.admin.member.model.dto.AdminMemberDTO" id="adminMemberResultMap">
+		<result property="userId" column="USER_ID"/>	
+		<result property="nickName" column="NICKNAME"/>
+	</resultMap>
+	<select id="adminRecipeListCount" resultType="_int" parameterType="hashmap">
+		SELECT
+			   COUNT(*)
+		  FROM RECIPE A
+		  JOIN USERS_MNG B ON(A.MEMBER_IDX = B.MEMBER_IDX)	
+ 		<where>
+			<if test="searchCondition == 'userId'">
+				B.USER_ID = #{ searchValue }
+			</if>
+			<if test="searchCondition == 'nickName'">
+				B.NICKNAME = #{ searchValue }
+			</if>
+		</where>
+	</select> 
+	<select id="adminRecipeListCount2" resultType="_int" parameterType="hashmap">
+		SELECT
+			   COUNT(*)
+		  FROM RECIPE A
+		  JOIN USERS_MNG B ON(A.MEMBER_IDX = B.MEMBER_IDX)	
+ 		<where>
+			<if test="searchCondition == 'userId'">
+				B.USER_ID = #{ searchValue }
+			</if>
+			<if test="searchCondition == 'nickName'">
+				B.NICKNAME = #{ searchValue }
+			</if>
+			AND APR_STATE = '요청'
+			AND STATE_YN = 'N'
+		</where>
+		
+	</select> 
+	<select id="adminRecipeListSelect" resultMap="recipeListResultMap">
+	
+	   SELECT  C.RNUM		
+			  ,C.RCP_IDX	
+			  ,C.TITLE
+			  ,C.CONTENT
+			  ,C.REG_DATE
+			  ,C.APR_STATE
+			  ,C.STATE_YN
+			  ,C.USER_ID
+			  ,C.NICKNAME	
+  	     FROM (SELECT ROWNUM RNUM		
+					  ,B.RCP_IDX	
+					  ,B.TITLE
+					  ,B.CONTENT
+					  ,B.REG_DATE
+					  ,B.APR_STATE
+					  ,B.STATE_YN
+					  ,B.USER_ID
+					  ,B.NICKNAME	
+		         FROM (SELECT
+					 		   A.RCP_IDX	
+							  ,A.TITLE
+							  ,A.CONTENT
+							  ,A.REG_DATE
+							  ,A.APR_STATE
+							  ,A.STATE_YN
+							  ,B.USER_ID
+							  ,B.NICKNAME
+						  FROM RECIPE A
+						  JOIN USERS_MNG B ON(A.MEMBER_IDX = B.MEMBER_IDX)
+						  <where>
+							<if test="searchCondition == 'userId'">
+								B.USER_ID = #{ searchValue }
+							</if>
+							<if test="searchCondition == 'nickName'">
+								B.NICKNAME = #{ searchValue }
+							</if>
+						</where>
+						ORDER BY A.REG_DATE DESC) B
+						<![CDATA[
+						WHERE ROWNUM <= #{ endRow }
+						]]> ) C
+				WHERE C.RNUM >= #{ startRow }
+	</select>
+	
+	<select id="adminRecipeListSelect2" resultMap="recipeListResultMap">
+	
+	   SELECT  C.RNUM		
+			  ,C.RCP_IDX	
+			  ,C.TITLE
+			  ,C.CONTENT
+			  ,C.REG_DATE
+			  ,C.APR_STATE
+			  ,C.STATE_YN
+			  ,C.USER_ID
+			  ,C.NICKNAME	
+  	     FROM (SELECT ROWNUM RNUM		
+					  ,B.RCP_IDX	
+					  ,B.TITLE
+					  ,B.CONTENT
+					  ,B.REG_DATE
+					  ,B.APR_STATE
+					  ,B.STATE_YN
+					  ,B.USER_ID
+					  ,B.NICKNAME	
+		         FROM (SELECT
+					 		   A.RCP_IDX	
+							  ,A.TITLE
+							  ,A.CONTENT
+							  ,A.REG_DATE
+							  ,A.APR_STATE
+							  ,A.STATE_YN
+							  ,B.USER_ID
+							  ,B.NICKNAME
+						  FROM RECIPE A
+						  JOIN USERS_MNG B ON(A.MEMBER_IDX = B.MEMBER_IDX)
+						  <where>
+							<if test="searchCondition == 'userId'">
+								B.USER_ID = #{ searchValue }
+							</if>
+							<if test="searchCondition == 'nickName'">
+								B.NICKNAME = #{ searchValue }
+							</if>
+							AND A.APR_STATE = '요청'
+				 			AND A.STATE_YN = 'N'
+						</where>
+						ORDER BY A.REG_DATE DESC) B
+						<![CDATA[
+						WHERE ROWNUM <= #{ endRow }
+						]]> ) C
+				WHERE C.RNUM >= #{ startRow }
+				  
+	</select>
+	
+	
+	<update id="adminRecipeUpdate">
+		UPDATE
+			   RECIPE A
+		   SET A.STATE_YN = 'Y',
+               A.APR_STATE = '승인'
+		 WHERE A.RCP_IDX = #{ rcpIdx }
+		   AND A.STATE_YN = 'N'
+		   AND A.APR_STATE = '요청'	
+	</update>
+	<update id="adminRecipeUpdate2">
+		UPDATE
+			   RECIPE A
+           SET A.APR_STATE = '반려'
+		 WHERE A.RCP_IDX = #{ rcpIdx }
+		   AND A.STATE_YN = 'N'
+		   AND A.APR_STATE = '요청'	
+	</update>
+	<update id="adminDelete">
+		UPDATE
+			   RECIPE A
+		   SET A.STATE_YN = 'N',
+		       A.APR_STATE = '요청'
+		 WHERE A.RCP_IDX = #{ rcpIdx }
+		   AND A.STATE_YN = 'Y'     
+		   AND A.APR_STATE = '승인'
+	</update>
+
+	
+</mapper>
+
