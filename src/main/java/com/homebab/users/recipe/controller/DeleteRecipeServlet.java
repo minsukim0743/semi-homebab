@@ -18,7 +18,7 @@ public class DeleteRecipeServlet extends HttpServlet {
 		int rcpIdx = Integer.parseInt(request.getParameter("rcpIdx"));
 		RecipeService recipeService = new RecipeService();
 		
-		int deleteFile = recipeService.deleteFile(rcpIdx);
+		int deleteFile = recipeService.deleteRecipe(rcpIdx);
 		
 		String path = "";
 		

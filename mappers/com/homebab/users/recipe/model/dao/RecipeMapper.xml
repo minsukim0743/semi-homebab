@@ -243,7 +243,7 @@
 	  	)  
 	  	VALUES
 	  	(
-	  	  #{ rcpIdx }, #{ memberIdx }, #{ stateYn }
+	  	  #{ rcpIdx }, #{ memberIdx }, 'Y'
 	  	) 	
 	  </insert>
 
@@ -260,10 +260,9 @@
 
 	  <!-- 추천 클릭시 추천 테이블 클릭여부 변경 -->
 	  <delete id="deleteTableRecipe" parameterType="com.homebab.users.recipe.model.dto.RecipeLikeDTO">
-	  DELETE
-  	    FROM RCP_LIKE
-  	   WHERE RCP_IDX = #{ rcpIdx }
-  	     AND MEMBER_IDX = #{ memberIdx }
+	  	DELETE
+  	      FROM RCP_LIKE
+  	     WHERE RCP_IDX = #{ rcpIdx }
   	  </delete>
 
 	  <!-- 추천 클릭시 추천수 감소 -->
@@ -290,7 +289,8 @@
 	  	SELECT
 	  	       STATE_YN
 	  	  FROM RCP_LIKE
-	  	 WHERE RCP_IDX = #{ rcpIdx }
+	  	 WHERE MEMBER_IDX = #{ memberIdx }      
+	  	   AND RCP_IDX = #{ rcpIdx }
 	  </select>
 
 	  <!-- 레시피 게시글 선택 시 화면 -->
@@ -312,10 +312,12 @@
   		     , C.SUB_PATH
   		     , D.NICKNAME
   		     , A.MEMBER_IDX
+  		     , E.STATE_YN
   		  FROM RECIPE A
   		  JOIN CATEGORY B ON (A.CTGR_IDX = B.CTGR_IDX)
   		  JOIN RCP_FILEUPLOAD C ON (A.RCP_IDX = C.RCP_IDX)
-  		  JOIN USERS_MNG D ON (A.MEMBER_IDX = D.MEMBER_IDX) 
+  		  JOIN USERS_MNG D ON (A.MEMBER_IDX = D.MEMBER_IDX)
+  		  LEFT JOIN RCP_LIKE E ON (A.MEMBER_IDX = E.MEMBER_IDX) 
   		 WHERE A.RCP_IDX = #{ rcpIdx } 
   		   AND A.STATE_YN = 'Y'
   	</select>
@@ -328,11 +330,12 @@
   	</delete>
 
   	<!-- 레시피 게시글 삭제 -->
-  	<delete id="deleteRecipe" parameterType="com.homebab.users.recipe.model.dto.RecipeDTO">
-	  	 DELETE
-	  	   FROM RECIPE
-	  	  WHERE RCP_IDX = #{ rcpIdx }
-  	</delete> 
+  	<update id="deleteRecipe" parameterType="com.homebab.users.recipe.model.dto.RecipeDTO">
+	  	 UPDATE
+	  	        RECIPE
+	  	    SET STATE_YN = 'N'
+	  	  WHERE RCP_IDX = #{ rcpIdx }   
+  	</update> 
 
   	<!-- 레시피 게시글 내용 수정 -->  
   	<update id="updateRecipe" parameterType="com.homebab.users.recipe.model.dto.RecipeDTO" >

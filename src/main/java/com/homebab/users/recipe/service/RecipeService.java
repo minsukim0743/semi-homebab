@@ -158,30 +158,30 @@ public class RecipeService {
 	 * @return
 	 */
 
-	public int deleteFile(int rcpIdx) {
+	public int deleteRecipe(int rcpIdx) {
 
 		SqlSession sqlSession = getSqlSession();
 		recipeMapper = sqlSession.getMapper(RecipeMapper.class);
 
 		System.out.println("deleteFile check");
 
-		int deleteResult = recipeMapper.deleteFile(rcpIdx);
+		int deleteResult = recipeMapper.deleteRecipe(rcpIdx);
 
 		System.out.println("deleteFile check : " + deleteResult);
 
 		int result = 0;
 		
-		int deleteResult2 = 0;
+//		int deleteResult2 = 0;
+//		
+//		if(deleteResult > 0) {
+//
+//			deleteResult2 = recipeMapper.deleteRecipe(rcpIdx);
+//
+//			System.out.println("deleteFile check2 : " + deleteResult2);
+//
+//		} 
 		
-		if(deleteResult > 0) {
-
-			deleteResult2 = recipeMapper.deleteRecipe(rcpIdx);
-
-			System.out.println("deleteFile check2 : " + deleteResult2);
-
-		} 
-		
-		if(deleteResult > 0 && deleteResult2 > 0) {
+		if(deleteResult > 0 ) {
 			
 			sqlSession.commit();
 
@@ -333,14 +333,14 @@ public class RecipeService {
 	 * @return
 	 */
 
-	public int likeCountRecipe(int rcpIdx, int memberIdx, String stateYn) {
+	public int likeCountRecipe(int rcpIdx, int memberIdx) {
 
 		SqlSession sqlSession = getSqlSession();
 		recipeMapper = sqlSession.getMapper(RecipeMapper.class);
 
 		int result = 0;
 		
-		int table = recipeMapper.likeCountRecipe(rcpIdx, memberIdx, stateYn);
+		int table = recipeMapper.likeCountRecipe(rcpIdx, memberIdx);
 
 		if(table > 0 ) {
 			
@@ -376,14 +376,14 @@ public class RecipeService {
 	 * @return
 	 */
 
-	public int likeCancelRecipe(int rcpIdx, int memberIdx, String stateYn) {
+	public int likeCancelRecipe(int rcpIdx, int memberIdx) {
 
 		SqlSession sqlSession = getSqlSession();
 		recipeMapper = sqlSession.getMapper(RecipeMapper.class);
 
 		int result = 0;
 		
-		int deleteTableRecipe = recipeMapper.deleteTableRecipe(rcpIdx, memberIdx, stateYn);
+		int deleteTableRecipe = recipeMapper.deleteTableRecipe(rcpIdx, memberIdx);
 		
 		if(deleteTableRecipe > 0 ) {
 			
@@ -525,9 +525,5 @@ public class RecipeService {
 		return selectLikeRecipeList;
 
 	}
-
-
-	
-
 
 }

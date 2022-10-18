@@ -37,7 +37,7 @@ public interface RecipeMapper {
 
 	List<RecipeDTO> searchRecipe(@Param("keyword")String keyword, @Param("type")String type);
 
-	int likeCountRecipe(@Param("rcpIdx")int rcpIdx, @Param("memberIdx")int memberIdx, @Param("stateYn")String stateYn);
+	int likeCountRecipe(@Param("rcpIdx")int rcpIdx, @Param("memberIdx")int memberIdx);
 
 	int likeCountRecipe2(@Param("rcpIdx")int rcpIdx);
 	
@@ -47,7 +47,7 @@ public interface RecipeMapper {
 	
 	int selectTotalCount();
 
-	int deleteTableRecipe(@Param("rcpIdx")int rcpIdx, @Param("memberIdx")int memberIdx, @Param("stateYn")String stateYn);
+	int deleteTableRecipe(@Param("rcpIdx")int rcpIdx, @Param("memberIdx")int memberIdx);
 
 	int likeCencelRecipe(@Param("rcpIdx")int rcpIdx);
 
@@ -56,6 +56,5 @@ public interface RecipeMapper {
 	List<RecipeDTO> seleteLikeRecipeList();
 
 	List<RecipeLikeDTO> selectRecipeLike2(int rcpIdx);
-
 
 }

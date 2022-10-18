@@ -24,7 +24,7 @@
 				
 			case "updateRecipe" : 
 				successMessage = "레시피 수정에 성공하셨습니다!";
-				movePath = "/recipe/view?rcpIdx=" + rcpIdx;
+				movePath = "/recipeComments/view?rcpIdx=" + rcpIdx;
 				break;
 				
 			case "deleteRecipe"	:

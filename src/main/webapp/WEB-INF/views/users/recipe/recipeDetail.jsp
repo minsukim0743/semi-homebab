@@ -52,18 +52,16 @@
                 	<table>
 						<button onclick="location.href='${ pageContext.servletContext.contextPath }/recipe/page'">돌아가기</button>
 						<form action="${ pageContext.servletContext.contextPath }/recipe/like" method="get">
-							<c:if test="${!empty sessionScope.loginUser && empty recipeLike.stateYn }">
+							<c:if test="${!empty sessionScope.loginUser && empty recipeLike[0].stateYn }">
 								<input type="hidden" name="rcpIdx" value="${ recipe.rcpIdx }">
 								<input type="hidden" name="memberIdx" value="${ sessionScope.loginUser.memberIdx }">
-								<input type="hidden" name="stateYn" value="Y">
 								<button class="like">추천</button>
 							</c:if>
 						</form>
 						<form action="${ pageContext.servletContext.contextPath }/recipe/likeCancel" method="get">
-							<c:if test="${ !empty sessionScope.loginUser && recipeLike.stateYn eq 'Y' }">
+							<c:if test="${ !empty sessionScope.loginUser && recipeLike[0].stateYn eq 'Y' }">
 								<input type="hidden" name="rcpIdx" value="${ recipe.rcpIdx }">
 								<input type="hidden" name="memberIdx" value="${ sessionScope.loginUser.memberIdx }">
-								<input type="hidden" name="stateYn" value="N">
 								<button>추천 취소</button>								
 							</c:if>
 						</form>

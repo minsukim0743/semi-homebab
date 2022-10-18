@@ -18,18 +18,16 @@ public class LikeCancleRecipeServlet extends HttpServlet {
 		
 		int rcpIdx = Integer.parseInt(request.getParameter("rcpIdx"));
 		int memberIdx = Integer.parseInt(request.getParameter("memberIdx"));
-		String stateYn = request.getParameter("stateYn");
 		
 		RecipeLikeDTO recipeLike = new RecipeLikeDTO();
 		
 		recipeLike.setRcpIdx(rcpIdx);
 		recipeLike.setMemberIdx(memberIdx);
-		recipeLike.setStateYn(stateYn);
 		
 		System.out.println("추천 취소 눌렀을 때 테스트입니다 테스트 : " + recipeLike);
 		
 		RecipeService recipeService = new RecipeService();
-		int recipe = recipeService.likeCancelRecipe(rcpIdx, memberIdx, stateYn); 
+		int recipe = recipeService.likeCancelRecipe(rcpIdx, memberIdx);
 				
 		if(recipe > 0) {
 			

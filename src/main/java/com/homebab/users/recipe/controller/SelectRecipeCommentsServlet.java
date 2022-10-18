@@ -1,6 +1,7 @@
 package com.homebab.users.recipe.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,6 @@ import com.homebab.users.recipe.service.RecipeService;
 @WebServlet("/recipeComments/view")
 public class SelectRecipeCommentsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Object recipeLike;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -77,6 +77,8 @@ public class SelectRecipeCommentsServlet extends HttpServlet {
 		
 		System.out.println("session : " + session);
 		
+		List<RecipeLikeDTO> recipeLike = new ArrayList<RecipeLikeDTO>();
+		
 		if(session != null) {
 			
 			int memberIdx = ((UsersMngDTO) request.getSession().getAttribute("loginUser")).getMemberIdx();
@@ -84,12 +86,12 @@ public class SelectRecipeCommentsServlet extends HttpServlet {
 			System.out.println("memberIdx : " + memberIdx);
 
 			
-			List<RecipeLikeDTO> recipeLike = service.selectRecipeLike(rcpIdx, memberIdx);
+			recipeLike = service.selectRecipeLike(rcpIdx, memberIdx);
 
 	
 		} else {
 			
-			List<RecipeLikeDTO> recipeLike = service.selectRecipeLike2(rcpIdx);
+			recipeLike = service.selectRecipeLike2(rcpIdx);
 
 		}
 

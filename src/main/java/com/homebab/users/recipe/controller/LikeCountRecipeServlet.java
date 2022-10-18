@@ -19,16 +19,14 @@ public class LikeCountRecipeServlet extends HttpServlet {
 		
 		int rcpIdx = Integer.parseInt(request.getParameter("rcpIdx"));
 		int memberIdx = Integer.parseInt(request.getParameter("memberIdx"));
-		String stateYn = request.getParameter("stateYn");
 		
 		RecipeLikeDTO recipeLike = new RecipeLikeDTO();
 		
 		recipeLike.setRcpIdx(rcpIdx);
 		recipeLike.setMemberIdx(memberIdx);
-		recipeLike.setStateYn(stateYn);
 		
 		RecipeService recipeService = new RecipeService();
-		int recipe = recipeService.likeCountRecipe(rcpIdx, memberIdx, stateYn);
+		int recipe = recipeService.likeCountRecipe(rcpIdx, memberIdx);
 		
 		if(recipe > 0) {
 			
