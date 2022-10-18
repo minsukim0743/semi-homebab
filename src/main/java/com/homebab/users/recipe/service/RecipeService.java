@@ -171,16 +171,6 @@ public class RecipeService {
 
 		int result = 0;
 		
-//		int deleteResult2 = 0;
-//		
-//		if(deleteResult > 0) {
-//
-//			deleteResult2 = recipeMapper.deleteRecipe(rcpIdx);
-//
-//			System.out.println("deleteFile check2 : " + deleteResult2);
-//
-//		} 
-		
 		if(deleteResult > 0 ) {
 			
 			sqlSession.commit();
@@ -242,25 +232,20 @@ public class RecipeService {
 		int recipeResult = recipeMapper.updateRecipe(recipe);
 
 		/* 수정해야할 파일 존재할 경우 */
-
 		if(recipe.getFileList() != null) {
 
 			int deleteResult = recipeMapper.deleteFile(rcpIdx);
 
 			/* 삭제 완료 되었을 경우 */
-
 			if(deleteResult > 0) {
 
 				/* 새로 첨부된 파일 넣기 */
-
 				RecipeFileUploadDTO recipeFile = recipe.getFileList().get(0);
 
 				recipeFile.setRcpIdx(rcpIdx);
 
 				insertFileResult = recipeMapper.updateInsertFileUpload(recipeFile);
-
 			}
-
 		}
 		
 		System.out.println("recipeResult : " + recipeResult);
@@ -280,7 +265,6 @@ public class RecipeService {
 		sqlSession.close();
 
 		return result;
-
 	}
 
 	/**
@@ -463,44 +447,24 @@ public class RecipeService {
 
 	public List<RecipeLikeDTO> selectRecipeLike(int rcpIdx, int memberIdx) {
 
-
-		
 		SqlSession sqlSession = getSqlSession();
-
-
 		recipeMapper = sqlSession.getMapper(RecipeMapper.class);
-
-
 		
 		List<RecipeLikeDTO> likeRecipe = recipeMapper.selectRecipeLike(rcpIdx,memberIdx);
 
-
-		
 		sqlSession.close();
-
-
 		
 		return likeRecipe;
-
-
 	}
 	
 	public List<RecipeLikeDTO> selectRecipeLike2(int rcpIdx) {
 		
 		SqlSession sqlSession = getSqlSession();
-
-
 		recipeMapper = sqlSession.getMapper(RecipeMapper.class);
-
-
 		
 		List<RecipeLikeDTO> likeRecipe = recipeMapper.selectRecipeLike2(rcpIdx);
 
-
-		
 		sqlSession.close();
-
-
 		
 		return likeRecipe;
 	}

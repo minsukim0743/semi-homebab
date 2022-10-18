@@ -14,6 +14,13 @@ public class RecipeCommentsService {
 
 	RecipeCommentsMapper commentsMapper;
 	
+	/**
+	 * <pre>
+	 *   게시물 댓글 등록
+	 * </pre>
+	 * @param commentInsert
+	 * @return
+	 */
 	public int commentsInsert(Map<String, Object> commentInsert) {
 
 		SqlSession sqlSession = getSqlSession();
@@ -34,6 +41,13 @@ public class RecipeCommentsService {
 		return result;
 	}
 
+	/**
+	 * <pre>
+	 *   게시물 댓글 삭제
+	 * </pre>
+	 * @param delete
+	 * @return
+	 */
 	public int commentsDelete(Map<String, String> delete) {
 		
 		SqlSession sqlSession = getSqlSession();
@@ -54,6 +68,13 @@ public class RecipeCommentsService {
 		return result;
 	}
 
+	/**
+	 * <pre>
+	 *   게시물 신고 기능
+	 * </pre>
+	 * @param siren
+	 * @return
+	 */
 	public int insertSiren(Map<String, String> siren) {
 		
 		SqlSession sqlSession = getSqlSession();

@@ -234,7 +234,7 @@
 	         WHERE A.RCP_IDX = #{ rcpIdx }
 	  </update>
 
-	  <!-- 추천 클릭시 추천 테이블에 추가 -->
+	  <!-- 추천 클릭시 한 계정 중복추천을 방지하기 위하여 추천 테이블에 추가 -->
 	  <insert id="likeCountRecipe" parameterType="com.homebab.users.recipe.model.dto.RecipeLikeDTO">
 	  	INSERT
 	  	  INTO RCP_LIKE
@@ -258,7 +258,7 @@
 	     WHERE A.RCP_IDX = #{ rcpIdx }
 	  </update>
 
-	  <!-- 추천 클릭시 추천 테이블 클릭여부 변경 -->
+	  <!-- 추천 클릭시 추천 테이블 내 정보 삭제 -->
 	  <delete id="deleteTableRecipe" parameterType="com.homebab.users.recipe.model.dto.RecipeLikeDTO">
 	  	DELETE
   	      FROM RCP_LIKE
@@ -293,7 +293,7 @@
 	  	   AND RCP_IDX = #{ rcpIdx }
 	  </select>
 
-	  <!-- 레시피 게시글 선택 시 화면 -->
+	  <!-- 레시피 게시물 상세조회 -->
 	  <select id="selectOneRecipeWriting" resultMap="recipeResultMap">
   		SELECT
   		       A.RCP_IDX
@@ -368,7 +368,7 @@
 
   	</insert>
 
-	<!-- 레시피 전체 게시물 페이징 -->  	
+	<!-- 레시피 전체 게시물 개수 조회 -->  	
   	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
         SELECT
                COUNT(*)
@@ -428,7 +428,7 @@
 	  ORDER BY A.RCP_IDX DESC      
 	</select>
 	
-	<!-- 댓글 조회 -->
+	<!-- 레시피 게시글 내 댓글 조회 -->
 	<select id="recipeCommentsSelect" resultMap="recipeCommentsResultMap">
   	  SELECT   C.RNUM	
   		     , C.CMT_CONTENT

@@ -15,14 +15,15 @@ public class DeleteRecipeServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// 게시물 삭제를 위해 해당 게시물 인덱스를 받아옴.
 		int rcpIdx = Integer.parseInt(request.getParameter("rcpIdx"));
 		RecipeService recipeService = new RecipeService();
 		
-		int deleteFile = recipeService.deleteRecipe(rcpIdx);
+		int deleteRecipe = recipeService.deleteRecipe(rcpIdx);
 		
 		String path = "";
 		
-		if(deleteFile > 0) {
+		if(deleteRecipe > 0) {
 			
 			path = "/WEB-INF/views/common/success.jsp";
 			request.setAttribute("successCode", "deleteRecipe");
