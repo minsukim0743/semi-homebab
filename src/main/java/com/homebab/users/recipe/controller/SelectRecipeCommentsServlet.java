@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.homebab.admin.common.pagin.Pagenation;
 import com.homebab.admin.common.pagin.SelectCriteria;
@@ -23,6 +22,7 @@ import com.homebab.users.recipe.service.RecipeService;
 @WebServlet("/recipeComments/view")
 public class SelectRecipeCommentsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private Object recipeLike;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -73,8 +73,6 @@ public class SelectRecipeCommentsServlet extends HttpServlet {
 		
 		System.out.println("currentPage2 : " + currentPage);
 		
-		RecipeLikeDTO recipeLike = new RecipeLikeDTO();
-		
 		Object session = request.getSession().getAttribute("loginUser");
 		
 		System.out.println("session : " + session);
@@ -86,12 +84,12 @@ public class SelectRecipeCommentsServlet extends HttpServlet {
 			System.out.println("memberIdx : " + memberIdx);
 
 			
-			recipeLike = service.selectRecipeLike(rcpIdx, memberIdx);
+			List<RecipeLikeDTO> recipeLike = service.selectRecipeLike(rcpIdx, memberIdx);
 
 	
 		} else {
 			
-			recipeLike = service.selectRecipeLike2(rcpIdx);
+			List<RecipeLikeDTO> recipeLike = service.selectRecipeLike2(rcpIdx);
 
 		}
 

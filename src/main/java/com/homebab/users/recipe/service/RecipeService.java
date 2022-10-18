@@ -461,7 +461,7 @@ public class RecipeService {
 	 * @return
 	 */
 
-	public RecipeLikeDTO selectRecipeLike(int rcpIdx, int memberIdx) {
+	public List<RecipeLikeDTO> selectRecipeLike(int rcpIdx, int memberIdx) {
 
 
 		
@@ -472,7 +472,7 @@ public class RecipeService {
 
 
 		
-		RecipeLikeDTO likeRecipe = recipeMapper.selectRecipeLike(rcpIdx,memberIdx);
+		List<RecipeLikeDTO> likeRecipe = recipeMapper.selectRecipeLike(rcpIdx,memberIdx);
 
 
 		
@@ -485,7 +485,7 @@ public class RecipeService {
 
 	}
 	
-	public RecipeLikeDTO selectRecipeLike2(int rcpIdx) {
+	public List<RecipeLikeDTO> selectRecipeLike2(int rcpIdx) {
 		
 		SqlSession sqlSession = getSqlSession();
 
@@ -494,7 +494,7 @@ public class RecipeService {
 
 
 		
-		RecipeLikeDTO likeRecipe = recipeMapper.selectRecipeLike2(rcpIdx);
+		List<RecipeLikeDTO> likeRecipe = recipeMapper.selectRecipeLike2(rcpIdx);
 
 
 		

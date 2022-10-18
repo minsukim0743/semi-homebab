@@ -51,11 +51,11 @@ public interface RecipeMapper {
 
 	int likeCencelRecipe(@Param("rcpIdx")int rcpIdx);
 
-	RecipeLikeDTO selectRecipeLike(@Param("rcpIdx")int rcpIdx, @Param("memberIdx")int memberIdx);
+	List<RecipeLikeDTO> selectRecipeLike(@Param("rcpIdx")int rcpIdx, @Param("memberIdx")int memberIdx);
 
 	List<RecipeDTO> seleteLikeRecipeList();
 
-	RecipeLikeDTO selectRecipeLike2(int rcpIdx);
+	List<RecipeLikeDTO> selectRecipeLike2(int rcpIdx);
 
 
 }

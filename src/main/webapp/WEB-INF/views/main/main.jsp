@@ -55,7 +55,7 @@
 	        </ul>
     		<c:forEach var="selectLikeRecipeList" items="${ requestScope.selectLikeRecipeList}" begin="0" end="4">	
 		    <div class="gallery">
-		          <img src="${ selectLikeRecipeList.fileList[0].subPath }" onclick="location.href='/recipe/view?rcpIdx=${ selectLikeRecipeList.rcpIdx }'" width="500" height="300" style="cursor:pointer;">
+		          <img src="${ selectLikeRecipeList.fileList[0].subPath }" onclick="location.href='/recipeComments/view?rcpIdx=${ selectLikeRecipeList.rcpIdx }'" width="500" height="300" style="cursor:pointer;">
 		    	  <div class="desc"><c:out value="${ selectLikeRecipeList.title }"/></div>
 		    </div>
 		    </c:forEach>
