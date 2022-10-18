@@ -16,7 +16,7 @@ public class RecipeCommentsService {
 	
 	/**
 	 * <pre>
-	 *   게시물 댓글 등록
+	 *   레시피 게시물 댓글 등록
 	 * </pre>
 	 * @param commentInsert
 	 * @return
@@ -43,7 +43,7 @@ public class RecipeCommentsService {
 
 	/**
 	 * <pre>
-	 *   게시물 댓글 삭제
+	 *   레시피 게시물 댓글 삭제
 	 * </pre>
 	 * @param delete
 	 * @return
@@ -70,7 +70,7 @@ public class RecipeCommentsService {
 
 	/**
 	 * <pre>
-	 *   게시물 신고 기능
+	 *   레시피 게시물 댓글 신고
 	 * </pre>
 	 * @param siren
 	 * @return

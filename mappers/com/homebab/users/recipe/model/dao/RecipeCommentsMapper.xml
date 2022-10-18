@@ -24,51 +24,53 @@
 	  	<result property="stateYn" column="STATE_YN"/>
   	</resultMap>
   	
+  	<!-- 레시피 게시물 댓글 등록 -->
   	<insert id="commentsInsert">
   		INSERT
-  			INTO RCP_COMMENTS A
-  			(
-  			  A.CMT_IDX
-			, A.CMT_CONTENT
-			, A.REG_DATE
-			, A.MEMBER_IDX
-			, A.RCP_IDX
-  			)
-  			VALUES
-  			(
-  			  SEQ_CMT_IDX.NEXTVAL
-  			, #{ cmtContent }
-  			, SYSDATE
-  			, #{ memberIdx }
-  			, #{ rcpIdx } 
-  			)
+  		  INTO RCP_COMMENTS A
+  		(
+  		  A.CMT_IDX
+		, A.CMT_CONTENT
+		, A.REG_DATE
+		, A.MEMBER_IDX
+		, A.RCP_IDX
+  		)
+  		VALUES
+  		(
+  		  SEQ_CMT_IDX.NEXTVAL
+  		, #{ cmtContent }
+  		, SYSDATE
+  		, #{ memberIdx }
+  		, #{ rcpIdx } 
+  		)
   	</insert>
  
+ 	<!-- 레시피 게시물 댓글 삭제 -->
   	<delete id="commentsDelete">
-  	
-  		DELETE FROM RCP_COMMENTS
+  		DELETE 
+  		  FROM RCP_COMMENTS
   		 WHERE MEMBER_IDX = #{ memberIdx }
   		   AND RCP_IDX = #{ rcpIdx }
-  		   AND CMT_IDX = #{ cmtIdx }
-  		
+  		   AND CMT_IDX = #{ cmtIdx }	
   	</delete>
   	
+  	<!-- 레시피 게시물 댓글 신고 -->
   	<insert id="insertSiren">
   		INSERT
-  			INTO CMT_REPORT A
-  			(
-  			  A.CMT_IDX
-			, A.MEMBER_IDX
-			, A.REG_DATE
-			, A.STATE_YN
-  			)
-  			VALUES
-  			(
-  			  #{ cmtIdx }
-  			, #{ memberIdx }
-  			, SYSDATE
-  			,'Y'
-  			)
+  		  INTO CMT_REPORT A
+  		(
+  		  A.CMT_IDX
+		, A.MEMBER_IDX
+		, A.REG_DATE
+		, A.STATE_YN
+  		)
+  		VALUES
+  		(
+  		  #{ cmtIdx }
+  		, #{ memberIdx }
+  		, SYSDATE
+  		,'Y'
+  		)
   	</insert>
 
   </mapper>
