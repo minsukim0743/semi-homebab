@@ -139,7 +139,7 @@
 		(
 		  SEQ_RECIPE.NEXTVAL, #{ title }, #{ content }, #{ memberIdx }
 		, TO_CHAR(SYSDATE,'YYYY.MM.DD HH24:MI'), 1, 0, #{ ctgrIdx }
-		, DEFAULT, DEFAULT, #{ serving }, #{ cookingTime }	 	
+		, DEFAULT, 'Y', #{ serving }, #{ cookingTime }	 	
 		)
   	</insert>
 

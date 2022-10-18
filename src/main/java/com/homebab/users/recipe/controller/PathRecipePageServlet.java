@@ -42,7 +42,7 @@ public class PathRecipePageServlet extends HttpServlet {
 
 		System.out.println("totalBoardCount : " + totalCount);
 
-		int limit = 12;	
+		int limit = 8;	
 
 		int buttonAmount = 5;
 		
